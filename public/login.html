@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+
+<body>
+    <form action="/login.html" method="get">
+        <label for="nombreUser">
+            <input type="text" required name="nombreUser" id="nombreUser" placeholder="Nombre">
+        </label>
+        <br>
+        <label for="apPaterUser">
+            <input type="text" required name="apPaterUser" id="apPaterUser" placeholder="Apellido Paterno">
+        </label>
+        <br>
+        <label for="apMaterUser">
+            <input type="text" required name="apMaterUser" id="apMaterUser" placeholder="Apellido Materno">
+        </label>
+        <br>
+        <label for="emailUser">
+            <input type="email" required name="emailUser" id="emailUser" placeholder="Email">
+        </label>
+        <br>
+        <label for="rolUser">
+            <select name="rolUser" id="rolUser" required>
+                <option value=""></option>
+                <option value="1">Generente Regional</option>
+                <option value="2">Encargado</option>
+            </select>
+        </label>
+        <br>
+        <button type="submit" id="agregarUsuario">Agregar usuario</button>
+    </form>
+    <script>
+        const nombre = document.getElementById("nombreUser");
+        const apP = document.getElementById("apPaterUser");
+        const apM = document.getElementById("apMaterUser");
+        const email = document.getElementById("emailUser");
+        const rolUser = document.getElementById("rolUser");
+
+        const agregar = document.getElementById("agregarUsuario");
+
+        document.forms[0].addEventListener("submit", function (e) {
+            e.preventDefault();
+            let indexOpcion = rolUser.selectedIndex;
+            let opcionRol = rolUser.options[indexOpcion];
+            console.log(opcionRol);
+            const usuario = {
+                nombreUser: nombre.value,
+                apPater: apP.value,
+                apM: apM.value,
+                email: email.value,
+                rol: opcionRol.value
+            };
+            console.log(usuario);
+            peticionFetch(usuario);
+        });
+
+        async function peticionFetch(obj) {
+            let response = await fetch('http://localhost:3100/login.html/CrearCuenta', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                },
+                body: JSON.stringify(obj)
+            });
+
+            let result = await response.ok;
+            if (result) {
+                alert("BIEN");
+            }
+            document.forms[0].submit();
+        }
+
+    </script>
+</body>
+
+</html>
