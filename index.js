@@ -3,10 +3,16 @@ console.clear();
 import createExpressServer from "express";
 import dotenv from "dotenv";
 import {inicarConexionMYSQL} from "./ConexionBD/ConexionMYSQL.js"
+import cuentaRuter from "./Rutas/Cuenta.js";
 
 dotenv.config()
 const expressApp = createExpressServer();
 const PORT = process.env.PORT;
+
+expressApp.use(createExpressServer.json());
+expressApp.use(createExpressServer.text());
+expressApp.use(createExpressServer.static("./public"));
+expressApp.use("/login.html", cuentaRuter);
 
 const main = async () => {  
     try {

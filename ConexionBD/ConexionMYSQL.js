@@ -37,5 +37,16 @@ const inicarConexionMYSQL = () => {
   });
 };*/
 
+const agregarUsuario = (objUsuario) => {
+    //const stm = "INSERT INTO Usuario VALUES ?";
+    const stm = "INSERT INTO Usuario SET ?";
+    const query = conexionMYSQL.query(stm, objUsuario, function (error, results, fields) {
+        if (error) throw error;
+        // Neat!
+        console.log("Se agrego un usuario a la BD");
+    });
+    //console.log(query.sql);
+};
 
-export { inicarConexionMYSQL };
+
+export { inicarConexionMYSQL, agregarUsuario };
